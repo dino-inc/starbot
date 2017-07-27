@@ -1,0 +1,13 @@
+:airplane_arriving:                                                     :classical_building: :classical_building:
+:black_small_square:      :airplane_arriving:                                     :classical_building: :classical_building:
+:black_small_square:                  :airplane_arriving:                         :classical_building: :classical_building:
+:black_small_square:                              :airplane_arriving:             :classical_building: :classical_building:
+:black_small_square:                                           :airplane_arriving::classical_building: :classical_building:
+:black_small_square:                                           :fire::classical_building: :classical_building:
+:black_small_square:                                                     :fire: :classical_building:
+:black_small_square:                                                     :fire: :fire:
+:star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent:
+:star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent:
+:star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent:
+:star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent:
+:star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent: :star_and_crescent:
