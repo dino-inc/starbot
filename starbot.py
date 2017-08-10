@@ -223,4 +223,4 @@ async def on_message(message):
 			await bot.delete_message(deletmessage)
 		
 
-bot.run('MzMyMTkzMTc1MTY5MTM4Njkw.DD6iiQ.5nDIB4-8F-lJYdNw6s0MTnp1xbA')
+bot.run('get your own token')
