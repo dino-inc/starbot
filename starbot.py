@@ -2,8 +2,11 @@ import discord
 from discord.ext import commands
 import asyncio
 import re
+import sys
 import os, random
 
+scriptpath = "C:/Users/Ethan/Desktop/python/starbot/modules/commandmodule.py"
+sys.path.append(os.path.abspath(scriptpath))
 
 description = '''A star bot.'''
 bot = commands.Bot(command_prefix='!', description=description)
@@ -11,12 +14,18 @@ bot = commands.Bot(command_prefix='!', description=description)
 async def on_ready():
 	print('Logged in as')
 	print(bot.user.name, bot.user.id)
-	print('------')
+	print('Servers: ', end='')
+	for server in bot.servers:
+		print(str('{0}, ').format(server), end='')
+	print()
+	print('----------------')
 	#global starnumber
 	#starnumber = 4
 	isrunning = "false"
 	
-fn = os.path.join(os.path.dirname(__file__), 'starbot.py')
+#fn = os.path.join(os.path.dirname(__file__), 'starbot.py')
+#dir = os.path.dirnam(__file__)
+
 
 #owner 
 owner = "141695444995670017"
@@ -38,16 +47,17 @@ def getRandomFile(path):
 
 '''starboard code'''
 
-@bot.event
-async def on_member_join(member):
-	if member.id == ("289588477492723712"):
-		muterole = discord.utils.get(message.server.roles, id='329705402021183488')
-		await bot.add_roles(member, muterole)
+#@bot.event
+#async def on_member_join(member):
+#	if member.id == ("289588477492723712"):
+#		muterole = discord.utils.get(message.server.roles, id='329705402021183488')
+#		await bot.add_roles(member, muterole)
+	
 @bot.event
 async def on_reaction_add(reaction, member):
 	print ("detected")
 	if reaction.emoji == ("⭐"):
-		if reaction.count == 6:
+		if reaction.count == 5:
 			nsfw = bot.get_channel("nsfw-garbage-bin")
 			if reaction.message.channel != nsfw:	
 				best_of = discord.utils.get(reaction.message.server.channels, name= "best_of")
@@ -90,16 +100,28 @@ async def on_message(message):
 	
 	terobotchance=random.randrange(200)
 	if terobotchance == 1:
-		choosepasta = getRandomFile("\\Users\\Ethan\\Desktop\\python\\starbot\\copypastas\\")
-		copypastaaa = open("\\Users\\Ethan\\Desktop\\python\\starbot\\copypastas\\"+choosepasta, "r",encoding="utf8")
-		selectedcopypasta = copypastaaa.read()
-		await bot.send_message(message.channel, "<@{}> {}".format(message.author.id, selectedcopypasta))
-		
+		if message.channel.is_private == True:
+			return
+		if message.channel.server.id == "351885259199086593":
+			return
+		if message.channel.server.id == "308265490877382656":
+			return
+		else:
+			this_dir = os.path.dirname(__file__) 
+			pastaraw = os.path.realpath("{0}/copypastas".format(this_dir))
+			choosepasta = getRandomFile(pastaraw)
+			copypastaaa = open(pastaraw+"\\"+choosepasta, "r",encoding="utf8")
+			selectedcopypasta = copypastaaa.read()
+			await bot.send_message(message.channel, "<@{}> {}".format(message.author.id, selectedcopypasta))
 	
-
+	
 #dablist command
 	if message.content.startswith('!listdabs'):
-		dablist = os.listdir("C:\\Users\\Ethan\\Desktop\\python\\starbot\\dabs")
+		#dablist = os.listdir("starbot\\dabs")
+		
+		this_dir = os.path.dirname(__file__) 
+		dabpath = os.path.realpath("{0}/dabs".format(this_dir))
+		dablist = os.listdir(dabpath)
 		liststr = '\n'.join(dablist)
 		em = discord.Embed(title='a list of dabs for people with terrible memories', description=liststr, colour=0xFFD700)
 		await bot.send_message(message.channel, embed=em)
@@ -123,7 +145,9 @@ async def on_message(message):
 				print(message.author, "was unable to type properly")
 				return
 			try:
-				story = open("\\Users\\Ethan\\Desktop\\python\\starbot\\dabs\\"+storycommand+".txt", "r",encoding="utf8")
+				this_dir = os.path.dirname(__file__) 
+				storypath = os.path.realpath("{0}/dabs".format(this_dir))
+				story = open(storypath+"\\"+storycommand+".txt", "r",encoding="utf8")
 			except IOError:
 				isrunning = ("false")
 				kill2=await bot.send_message(message.channel, "Choose a real file you nigger")
@@ -135,7 +159,9 @@ async def on_message(message):
 				print(message.author, "was unable to find a file.")
 				return
 			msg = await bot.send_message(message.channel, story.readline())
-			story = open("\\Users\\Ethan\\Desktop\\python\\starbot\\dabs\\"+storycommand+".txt", "r",encoding="utf8")
+			this_dir = os.path.dirname(__file__) 
+			pathstory2 = os.path.realpath("{0}/dabs/".format(this_dir))
+			story = open(pathstory2+"\\"+storycommand+".txt", "r",encoding="utf8")
 			await asyncio.sleep(.1)
 			#waits 3 second (I think 3 seconds, not sure)
 			dabstop = ("false")
@@ -167,7 +193,9 @@ async def on_message(message):
 			print (message.author, "was unable to wait his turn.")
 #help command
 	if message.content.startswith("!help"):
-		helptext=open("help.txt", "r", encoding="utf8")
+		this_dir = os.path.dirname(__file__) 
+		helppath = os.path.realpath("{0}".format(this_dir))
+		helptext=open(helppath+"\\"+"help.txt", "r", encoding="utf8")
 		helptextactual=helptext.read()
 		em = discord.Embed(title='Help', description=helptextactual, colour=0xFFD700)
 		await bot.send_message(message.channel, embed=em)
@@ -194,6 +222,30 @@ async def on_message(message):
 			except UnicodeEncodeError:
 				print ("invalid characters for the console")
 			await bot.delete_message(message)
+			
+#superecho command			
+	'''if message.content.startswith("!superecho"):
+		if message.author != bot.user:
+			try:
+				echoecho = message.content.split("!superecho ",1)[1]
+			except IndexError:
+				kill3 = await bot.send_message(message.channel, "I can't echo silence")
+				if message.author == ("☭Liar☭#0946"):
+					return
+				print(message.author, "is unable to speak properly")
+				await asyncio.sleep(1)
+				await bot.delete_message(kill3)
+				await bot.delete_message(message)
+				return
+			echonumber = 100
+			while echonumber != 0:
+				await bot.send_message(message.channel, "@everyone "+echoecho)
+				echonumber = echonumber - 1
+			try:
+				print(message.author, "echoed: ", echoecho)
+			except UnicodeEncodeError:
+				print ("invalid characters for the console")
+			await bot.delete_message(message)'''
 	
 #status command
 	if message.content.startswith("!status"):
@@ -201,14 +253,28 @@ async def on_message(message):
 		newstatus = oldstatus.replace("!status", "")
 		await bot.change_presence(game=discord.Game(name=newstatus))
 		print(message.author,"changed status.")
+	
+	if message.content.startswith("!wormhole"):
+		rawwormholemsg = message.content
+		refinedwrmmsg= rawwormholemsg.replace("!wormhole", "")
+		await bot.send_message(message.channel, "<@127296623779774464> wormhole send"+refinedwrmmsg)
 		
 #hotdog command
 	if message.content.startswith("!hotdog"):
 		await bot.send_message(message.channel, "https://cdn.discordapp.com/attachments/322415222004514827/333425912932728832/image.jpg")
-		
+	
+#4chan
+	if message.channel.is_private == True:
+		chan = bot.get_channel("347242341632835584")
+		await bot.send_message(chan, message.content)
+		print(message.author)
+#rename command
+	
 #joke command - not really working
 	if message.content.startswith("!joke"):
-		with open("\\Users\\Ethan\\Desktop\\python\\starbot\\jokes.txt", 'r') as infile:
+		this_dir = os.path.dirname(__file__) 
+		jokepath = os.path.realpath("{0}".format(this_dir))
+		with open(jokepath+"\\"+"jokes.txt", 'r') as infile:
 			randomlinecount = random.randrange(2,6,2)
 			print (randomlinecount)
 			lines = [line for line in [infile.readline() for _ in range(randomlinecount)] if len(line) ]
