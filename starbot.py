@@ -99,6 +99,8 @@ async def on_message(message):
 	
 	#terobot v2
 	
+	print(isrunning)
+	
 	terobotchance=random.randrange(200)
 	if terobotchance == 1:
 		if message.channel.is_private == True:
@@ -106,19 +108,20 @@ async def on_message(message):
 		if message.channel.server.id == "351885259199086593" or message.channel.server.id == "308265490877382656": #consider refactoring to check a list
 			return
 		else:
-			this_dir = os.path.dirname(__file__) 
+			this_dir = os.path.dirname('.') 
 			pastaraw = os.path.realpath("{0}/copypastas".format(this_dir))
 			choosepasta = getRandomFile(pastaraw)
-			copypastaaa = open(pastaraw+"\\"+choosepasta, "r",encoding="utf8")
+			copypastaaa = open(pastaraw+"/"+choosepasta, "r",encoding="utf8")
 			selectedcopypasta = copypastaaa.read()
 			await bot.send_message(message.channel, "<@{}> {}".format(message.author.id, selectedcopypasta))
 	
 	
 #dablist command
 	if message.content.startswith('!listdabs'):
-		#dablist = os.listdir("starbot\\dabs")
+		#dablist = os.listdir("starbot/dabs")
 		
-		this_dir = os.path.dirname(__file__) 
+		this_dir = os.path.realpath(".")
+		
 		dabpath = os.path.realpath("{0}/dabs".format(this_dir))
 		dablist = os.listdir(dabpath)
 		liststr = '\n'.join(dablist)
@@ -144,9 +147,10 @@ async def on_message(message):
 				print(message.author, "was unable to type properly")
 				return
 			try:
-				this_dir = os.path.dirname(__file__) 
+				this_dir = os.path.dirname('.') 
 				storypath = os.path.realpath("{0}/dabs".format(this_dir))
-				story = open(storypath+"\\"+storycommand+".txt", "r",encoding="utf8")
+				print(storypath+"/"+storycommand+".txt")
+				story = open("./"+storypath+"/"+storycommand+".txt", "r",encoding="utf8")
 			except IOError:
 				isrunning = False
 				kill2=await bot.send_message(message.channel, "Choose a real file you nigger")
@@ -158,14 +162,15 @@ async def on_message(message):
 				print(message.author, "was unable to find a file.")
 				return
 			msg = await bot.send_message(message.channel, story.readline())
-			this_dir = os.path.dirname(__file__) 
+			this_dir = os.path.dirname('.') 
 			pathstory2 = os.path.realpath("{0}/dabs/".format(this_dir))
-			story = open(pathstory2+"\\"+storycommand+".txt", "r",encoding="utf8")
+			story = open("./" + pathstory2+"/"+storycommand+".txt", "r",encoding="utf8")
+			
 			await asyncio.sleep(.1)
 			#waits 3 second (I think 3 seconds, not sure)
 			dabstop = False
 			for chunk in iter(lambda: story.readline(), ''):
-			#loops until end of file
+				
 				await bot.edit_message(msg, chunk)
 				#edits message to add next line
 				#if dabstop == True:
@@ -192,9 +197,9 @@ async def on_message(message):
 			print (message.author, "was unable to wait his turn.")
 #help command
 	if message.content.startswith("!help"):
-		this_dir = os.path.dirname(__file__) 
+		this_dir = os.path.dirname('.') 
 		helppath = os.path.realpath("{0}".format(this_dir))
-		helptext=open(helppath+"\\"+"help.txt", "r", encoding="utf8")
+		helptext=open(helppath+"/"+"help.txt", "r", encoding="utf8")
 		helptextactual=helptext.read()
 		em = discord.Embed(title='Help', description=helptextactual, colour=0xFFD700)
 		await bot.send_message(message.channel, embed=em)
@@ -271,9 +276,9 @@ async def on_message(message):
 	
 #joke command - not really working
 	if message.content.startswith("!joke"):
-		this_dir = os.path.dirname(__file__) 
+		this_dir = os.path.dirname('.') 
 		jokepath = os.path.realpath("{0}".format(this_dir))
-		with open(jokepath+"\\"+"jokes.txt", 'r') as infile:
+		with open(jokepath+"/"+"jokes.txt", 'r') as infile:
 			randomlinecount = random.randrange(2,6,2)
 			print (randomlinecount)
 			lines = [line for line in [infile.readline() for _ in range(randomlinecount)] if len(line) ]
@@ -288,4 +293,4 @@ async def on_message(message):
 			await bot.delete_message(deletmessage)
 		
 
-bot.run('get your own token')
+bot.run('MzI2NDQ0NzgyMTg2NjU5ODQw.DDDcqw.FLFwP6gCi68dVkjxRVJV5d44am0')
