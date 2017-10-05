@@ -103,9 +103,7 @@ async def on_message(message):
 	if terobotchance == 1:
 		if message.channel.is_private == True:
 			return
-		if message.channel.server.id == "351885259199086593":
-			return
-		if message.channel.server.id == "308265490877382656":
+		if message.channel.server.id == "351885259199086593" or message.channel.server.id == "308265490877382656": #consider refactoring to check a list
 			return
 		else:
 			this_dir = os.path.dirname(__file__) 
