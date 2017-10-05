@@ -5,7 +5,7 @@ import re
 import sys
 import os, random
 
-scriptpath = "C:/Users/Ethan/Desktop/python/starbot/modules/commandmodule.py"
+scriptpath = "../modules/commandmodule.py" #relative path dont DO a n y  Funny business
 sys.path.append(os.path.abspath(scriptpath))
 
 description = '''A star bot.'''
