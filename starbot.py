@@ -5,8 +5,9 @@ import re
 import sys
 import os, random
 
-scriptpath = "../modules/commandmodule.py" #relative path dont DO a n y  Funny business
-sys.path.append(os.path.abspath(scriptpath))
+
+#scriptpath = "../modules/commandmodule.py" #relative path dont DO a n y  Funny business
+#sys.path.append(os.path.abspath(scriptpath))
 
 description = '''A star bot.'''
 bot = commands.Bot(command_prefix='!', description=description)
