@@ -5,8 +5,9 @@ import re
 import sys
 import os, random
 
-scriptpath = "C:/Users/Ethan/Desktop/python/starbot/modules/commandmodule.py"
-sys.path.append(os.path.abspath(scriptpath))
+
+#scriptpath = "../modules/commandmodule.py" #relative path dont DO a n y  Funny business
+#sys.path.append(os.path.abspath(scriptpath))
 
 description = '''A star bot.'''
 bot = commands.Bot(command_prefix='!', description=description)
@@ -21,7 +22,7 @@ async def on_ready():
 	print('----------------')
 	#global starnumber
 	#starnumber = 4
-	isrunning = "false"
+	isrunning = False
 	
 #fn = os.path.join(os.path.dirname(__file__), 'starbot.py')
 #dir = os.path.dirnam(__file__)
@@ -45,7 +46,7 @@ def getRandomFile(path):
   index = random.randrange(0, len(files))
   return files[index]
 
-'''starboard code'''
+###starboard code### 
 
 #@bot.event
 #async def on_member_join(member):
@@ -85,7 +86,7 @@ async def on_reaction_add(reaction, member):
 		else:
 			pass
 
-isrunning = "false"
+isrunning = False
 
 '''commands'''
 @bot.event
@@ -98,28 +99,29 @@ async def on_message(message):
 	
 	#terobot v2
 	
+	print(isrunning)
+	
 	terobotchance=random.randrange(200)
 	if terobotchance == 1:
 		if message.channel.is_private == True:
 			return
-		if message.channel.server.id == "351885259199086593":
-			return
-		if message.channel.server.id == "308265490877382656":
+		if message.channel.server.id == "351885259199086593" or message.channel.server.id == "308265490877382656": #consider refactoring to check a list
 			return
 		else:
-			this_dir = os.path.dirname(__file__) 
+			this_dir = os.path.dirname('.') 
 			pastaraw = os.path.realpath("{0}/copypastas".format(this_dir))
 			choosepasta = getRandomFile(pastaraw)
-			copypastaaa = open(pastaraw+"\\"+choosepasta, "r",encoding="utf8")
+			copypastaaa = open(pastaraw+"/"+choosepasta, "r",encoding="utf8")
 			selectedcopypasta = copypastaaa.read()
 			await bot.send_message(message.channel, "<@{}> {}".format(message.author.id, selectedcopypasta))
 	
 	
 #dablist command
 	if message.content.startswith('!listdabs'):
-		#dablist = os.listdir("starbot\\dabs")
+		#dablist = os.listdir("starbot/dabs")
 		
-		this_dir = os.path.dirname(__file__) 
+		this_dir = os.path.realpath(".")
+		
 		dabpath = os.path.realpath("{0}/dabs".format(this_dir))
 		dablist = os.listdir(dabpath)
 		liststr = '\n'.join(dablist)
@@ -129,8 +131,8 @@ async def on_message(message):
 	if message.content.startswith('!dab'):
 	#checks for command !story
 
-		if isrunning == "false":
-			isrunning = ("true")
+		if not isrunning:
+			isrunning = True
 			#commanduser = message.author
 			try:
 				storycommand = message.content.split("!dab ",1)[1]
@@ -139,17 +141,18 @@ async def on_message(message):
 				await asyncio.sleep(1)
 				await bot.delete_message(kill3)
 				await bot.delete_message(message)
-				isrunning = ("false")
+				isrunning = False
 				if message.author == ("☭Liar☭#0946"):
 					return
 				print(message.author, "was unable to type properly")
 				return
 			try:
-				this_dir = os.path.dirname(__file__) 
+				this_dir = os.path.dirname('.') 
 				storypath = os.path.realpath("{0}/dabs".format(this_dir))
-				story = open(storypath+"\\"+storycommand+".txt", "r",encoding="utf8")
+				print(storypath+"/"+storycommand+".txt")
+				story = open("./"+storypath+"/"+storycommand+".txt", "r",encoding="utf8")
 			except IOError:
-				isrunning = ("false")
+				isrunning = False
 				kill2=await bot.send_message(message.channel, "Choose a real file you nigger")
 				await asyncio.sleep(2)
 				await bot.delete_message(kill2)	
@@ -159,27 +162,28 @@ async def on_message(message):
 				print(message.author, "was unable to find a file.")
 				return
 			msg = await bot.send_message(message.channel, story.readline())
-			this_dir = os.path.dirname(__file__) 
+			this_dir = os.path.dirname('.') 
 			pathstory2 = os.path.realpath("{0}/dabs/".format(this_dir))
-			story = open(pathstory2+"\\"+storycommand+".txt", "r",encoding="utf8")
+			story = open("./" + pathstory2+"/"+storycommand+".txt", "r",encoding="utf8")
+			
 			await asyncio.sleep(.1)
 			#waits 3 second (I think 3 seconds, not sure)
-			dabstop = ("false")
+			dabstop = False
 			for chunk in iter(lambda: story.readline(), ''):
-			#loops until end of file
+				
 				await bot.edit_message(msg, chunk)
 				#edits message to add next line
-				#if dabstop == ("true"):
+				#if dabstop == True:
 					#return
 				await asyncio.sleep(1)
 				#waits 3 seconds
 			await bot.delete_message(msg)
 			await bot.delete_message(message)
 			#deletes the message 
-			story.close
+			story.close() 
 			#closes the file
-			isrunning = ("false")
-			if message.author == ("☭Liar☭#0946"):
+			isrunning = False
+			if message.author == ("☭Liar☭#0946"): 
 					return
 			print(message.author, "used !dab successfully.")
 				
@@ -193,9 +197,9 @@ async def on_message(message):
 			print (message.author, "was unable to wait his turn.")
 #help command
 	if message.content.startswith("!help"):
-		this_dir = os.path.dirname(__file__) 
+		this_dir = os.path.dirname('.') 
 		helppath = os.path.realpath("{0}".format(this_dir))
-		helptext=open(helppath+"\\"+"help.txt", "r", encoding="utf8")
+		helptext=open(helppath+"/"+"help.txt", "r", encoding="utf8")
 		helptextactual=helptext.read()
 		em = discord.Embed(title='Help', description=helptextactual, colour=0xFFD700)
 		await bot.send_message(message.channel, embed=em)
@@ -272,9 +276,9 @@ async def on_message(message):
 	
 #joke command - not really working
 	if message.content.startswith("!joke"):
-		this_dir = os.path.dirname(__file__) 
+		this_dir = os.path.dirname('.') 
 		jokepath = os.path.realpath("{0}".format(this_dir))
-		with open(jokepath+"\\"+"jokes.txt", 'r') as infile:
+		with open(jokepath+"/"+"jokes.txt", 'r') as infile:
 			randomlinecount = random.randrange(2,6,2)
 			print (randomlinecount)
 			lines = [line for line in [infile.readline() for _ in range(randomlinecount)] if len(line) ]
@@ -289,4 +293,4 @@ async def on_message(message):
 			await bot.delete_message(deletmessage)
 		
 
-bot.run('get your own token')
+bot.run('MzI2NDQ0NzgyMTg2NjU5ODQw.DDDcqw.FLFwP6gCi68dVkjxRVJV5d44am0')
