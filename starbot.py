@@ -21,7 +21,7 @@ async def on_ready():
 	print('----------------')
 	#global starnumber
 	#starnumber = 4
-	isrunning = "false"
+	isrunning = False
 	
 #fn = os.path.join(os.path.dirname(__file__), 'starbot.py')
 #dir = os.path.dirnam(__file__)
@@ -85,7 +85,7 @@ async def on_reaction_add(reaction, member):
 		else:
 			pass
 
-isrunning = "false"
+isrunning = False
 
 '''commands'''
 @bot.event
@@ -129,8 +129,8 @@ async def on_message(message):
 	if message.content.startswith('!dab'):
 	#checks for command !story
 
-		if isrunning == "false":
-			isrunning = ("true")
+		if not isrunning:
+			isrunning = True
 			#commanduser = message.author
 			try:
 				storycommand = message.content.split("!dab ",1)[1]
@@ -139,7 +139,7 @@ async def on_message(message):
 				await asyncio.sleep(1)
 				await bot.delete_message(kill3)
 				await bot.delete_message(message)
-				isrunning = ("false")
+				isrunning = False
 				if message.author == ("☭Liar☭#0946"):
 					return
 				print(message.author, "was unable to type properly")
@@ -149,7 +149,7 @@ async def on_message(message):
 				storypath = os.path.realpath("{0}/dabs".format(this_dir))
 				story = open(storypath+"\\"+storycommand+".txt", "r",encoding="utf8")
 			except IOError:
-				isrunning = ("false")
+				isrunning = False
 				kill2=await bot.send_message(message.channel, "Choose a real file you nigger")
 				await asyncio.sleep(2)
 				await bot.delete_message(kill2)	
@@ -164,12 +164,12 @@ async def on_message(message):
 			story = open(pathstory2+"\\"+storycommand+".txt", "r",encoding="utf8")
 			await asyncio.sleep(.1)
 			#waits 3 second (I think 3 seconds, not sure)
-			dabstop = ("false")
+			dabstop = False
 			for chunk in iter(lambda: story.readline(), ''):
 			#loops until end of file
 				await bot.edit_message(msg, chunk)
 				#edits message to add next line
-				#if dabstop == ("true"):
+				#if dabstop == True:
 					#return
 				await asyncio.sleep(1)
 				#waits 3 seconds
@@ -178,7 +178,7 @@ async def on_message(message):
 			#deletes the message 
 			story.close() 
 			#closes the file
-			isrunning = ("false")
+			isrunning = False
 			if message.author == ("☭Liar☭#0946"): 
 					return
 			print(message.author, "used !dab successfully.")
