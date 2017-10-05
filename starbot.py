@@ -46,7 +46,7 @@ def getRandomFile(path):
   index = random.randrange(0, len(files))
   return files[index]
 
-'''starboard code'''
+###starboard code### 
 
 #@bot.event
 #async def on_member_join(member):
