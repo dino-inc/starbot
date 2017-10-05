@@ -176,10 +176,10 @@ async def on_message(message):
 			await bot.delete_message(msg)
 			await bot.delete_message(message)
 			#deletes the message 
-			story.close
+			story.close() 
 			#closes the file
 			isrunning = ("false")
-			if message.author == ("☭Liar☭#0946"):
+			if message.author == ("☭Liar☭#0946"): 
 					return
 			print(message.author, "used !dab successfully.")
 				
