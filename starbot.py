@@ -293,4 +293,4 @@ async def on_message(message):
 			await bot.delete_message(deletmessage)
 		
 
-bot.run('MzI2NDQ0NzgyMTg2NjU5ODQw.DDDcqw.FLFwP6gCi68dVkjxRVJV5d44am0')
+bot.run('no token for you')
