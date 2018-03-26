@@ -1,5 +1,0 @@
-!status - Change the bot's status.
-!dab [filename] - Summon an animation - ask around to find out all the names.
-!listdabs - List all the dabs.
-!hotdog - Hotdog.
-!echo [text] - Hack into the bot and make it say whatever you want.
