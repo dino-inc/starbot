@@ -78,5 +78,5 @@ async def recheck(ctx):
     print("Finished checking " + str(messagecount) + " messages in " + str(channelcount) + " channels and "
           + str(guildcount) + " guilds.")
 token = open("token.txt", 'r')
-bot.run(token.read(), bot=True, reconnect=True)
+bot.run(token.read().strip(), bot=True, reconnect=True)
 
